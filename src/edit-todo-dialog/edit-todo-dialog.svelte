@@ -37,7 +37,7 @@
 <Dialog bind:open {onclose}>
     <form {onsubmit} class="form">
         <TextInput
-            name="name"
+            id="name"
             label="Имя"
             bind:value={
                 editTodoDialogModel.getName, editTodoDialogModel.setName

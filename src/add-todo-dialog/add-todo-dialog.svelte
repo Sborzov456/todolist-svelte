@@ -26,7 +26,7 @@
 
 <Dialog bind:open {onclose}>
     <form {onsubmit} class="form">
-        <TextInput name="name" label="Имя" bind:value={name} />
+        <TextInput id="name" label="Имя" bind:value={name} />
         <TextArea id="description" label="Описание" bind:value={description} />
         <button type="submit">Создать</button>
     </form>
