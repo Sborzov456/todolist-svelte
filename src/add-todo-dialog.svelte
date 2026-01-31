@@ -1,7 +1,9 @@
 <script lang="ts">
     import Dialog from "./shared/dialog.svelte";
+    import TextInput from "./shared/fields/text-input.svelte";
     import type { DialogProps } from "./shared/dialog.svelte";
     import { addTodo } from "./todo-model.svelte";
+    import TextArea from "./shared/fields/text-area.svelte";
 
     let { open = $bindable(false) }: Pick<DialogProps, "open"> = $props();
 
@@ -24,15 +26,17 @@
 </script>
 
 <Dialog bind:open {onclose}>
-    <form {onsubmit}>
-        <p>
-            <label for="name">Имя</label>
-            <input name="name" bind:value={name} />
-        </p>
-        <p>
-            <label for="description">Описание</label>
-            <textarea name="description" bind:value={description}></textarea>
-        </p>
+    <form {onsubmit} class="form">
+        <TextInput name="name" label="Имя" bind:value={name} />
+        <TextArea id="description" label="Описание" bind:value={description} />
         <button type="submit">Создать</button>
     </form>
 </Dialog>
+
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+</style>
