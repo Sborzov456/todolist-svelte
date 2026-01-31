@@ -1,0 +1,24 @@
+services:
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - "5173:5173"
+        volumes:
+            - "./frontend/src:/frontend/src"
+        restart: "always"
+        # Нужно для запуска из Podman. Event-base слежение за изменением файлов не работает в Podman
+        environment:
+            - WATCHPACK_POLLING=true
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        volumes:
+          - "./backend/src:/backend/src"
+        ports:
+            - "3001:3001"
+        # Нужно для запуска из Podman. Event-base слежение за изменением файлов не работает в Podman
+        environment:
+            - CHOKIDAR_USEPOLLING=true
