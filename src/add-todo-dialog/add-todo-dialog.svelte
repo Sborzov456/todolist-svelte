@@ -1,33 +1,51 @@
 <script lang="ts">
     import { Dialog } from "../shared/dialog";
-    import type { DialogProps } from "../shared/dialog";
     import { TextInput, TextArea } from "../shared/fields";
-    import { addTodo } from "../todo-model.svelte";
+    import type { Todo } from "../types";
+    import { addTodoDialogModel } from "./add-todo-dialog-model.svelte";
 
-    let { open = $bindable(false) }: Pick<DialogProps, "open"> = $props();
+    type AddTodoDialogProps = {
+        onsubmit: (paylod: Omit<Todo, "id">) => void;
+    };
 
-    let name = $state("");
-    let description = $state("");
+    const props: AddTodoDialogProps = $props();
 
     function onsubmit(event: SubmitEvent) {
         event.preventDefault();
-        addTodo({ name, description });
 
-        open = false;
-        name = "";
-        description = "";
+        props.onsubmit({
+            name: addTodoDialogModel.getName(),
+            description: addTodoDialogModel.getDescription(),
+            isCompleted: false,
+        });
+
+        addTodoDialogModel.close();
+        addTodoDialogModel.resetForm();
     }
 
     function onclose() {
-        name = "";
-        description = "";
+        addTodoDialogModel.resetForm();
     }
 </script>
 
-<Dialog bind:open {onclose}>
+<Dialog
+    bind:open={addTodoDialogModel.getIsOpen, addTodoDialogModel.setIsOpen}
+    {onclose}
+>
     <form {onsubmit} class="form">
-        <TextInput id="name" label="Имя" bind:value={name} />
-        <TextArea id="description" label="Описание" bind:value={description} />
+        <TextInput
+            id="name"
+            label="Имя"
+            bind:value={addTodoDialogModel.getName, addTodoDialogModel.setName}
+        />
+        <TextArea
+            id="description"
+            label="Описание"
+            bind:value={
+                addTodoDialogModel.getDescription,
+                addTodoDialogModel.setDescription
+            }
+        />
         <button type="submit">Создать</button>
     </form>
 </Dialog>
