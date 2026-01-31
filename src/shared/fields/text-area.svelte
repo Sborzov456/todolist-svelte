@@ -12,3 +12,9 @@
 <Field {id} {label}>
     <textarea {id} bind:value {...props}></textarea>
 </Field>
+
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
