@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { Todo } from "./types";
-    import { completeTodo, removeTodo } from "./todo-model.svelte";
-    import { editTodoDialogModel } from "./edit-todo-dialog/edit-todo-dialog-model.svelte";
+    import type { Todo } from "../types";
+    import { completeTodo, removeTodo } from "../todo-model.svelte";
+    import { editTodoDialogModel } from "../edit-todo-dialog";
 
     type TodoListItemProps = {
         todo: Todo;

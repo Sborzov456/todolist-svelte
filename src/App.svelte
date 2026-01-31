@@ -1,7 +1,7 @@
 <script lang="ts">
-    import AddTodoDialog from "./add-todo-dialog.svelte";
-    import EditTodoDialog from "./edit-todo-dialog/edit-todo-dialog.svelte";
-    import TodoList from "./todo-list.svelte";
+    import { AddTodoDialog } from "./add-todo-dialog";
+    import { EditTodoDialog } from "./edit-todo-dialog";
+    import { TodoList } from "./todo-list";
     import { editTodo } from "./todo-model.svelte";
 
     let isAddTodoDialogOpen = $state<boolean>(false);

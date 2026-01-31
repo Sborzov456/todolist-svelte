@@ -1,5 +1,5 @@
 <script>
-    import { getTodos } from "./todo-model.svelte";
+    import { getTodos } from "../todo-model.svelte";
     import TodoListItem from "./todo-list-item.svelte";
 
     const todos = $derived(getTodos());

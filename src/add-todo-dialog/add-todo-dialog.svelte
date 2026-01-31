@@ -1,9 +1,8 @@
 <script lang="ts">
-    import Dialog from "./shared/dialog.svelte";
-    import TextInput from "./shared/fields/text-input.svelte";
-    import type { DialogProps } from "./shared/dialog.svelte";
-    import { addTodo } from "./todo-model.svelte";
-    import TextArea from "./shared/fields/text-area.svelte";
+    import { Dialog } from "../shared/dialog";
+    import type { DialogProps } from "../shared/dialog";
+    import { TextInput, TextArea } from "../shared/fields";
+    import { addTodo } from "../todo-model.svelte";
 
     let { open = $bindable(false) }: Pick<DialogProps, "open"> = $props();
 

@@ -1,7 +1,6 @@
 <script lang="ts">
-    import Dialog from "../shared/dialog.svelte";
-    import TextInput from "../shared/fields/text-input.svelte";
-    import TextArea from "../shared/fields/text-area.svelte";
+    import { Dialog } from "../shared/dialog";
+    import { TextInput, TextArea } from "../shared/fields";
     import { editTodoDialogModel } from "./edit-todo-dialog-model.svelte";
     import type { Todo } from "../types";
 
@@ -19,6 +18,7 @@
         }
 
         event.preventDefault();
+
         props.onsubmit({
             ...paylod,
             name: editTodoDialogModel.getName(),
