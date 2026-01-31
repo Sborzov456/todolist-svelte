@@ -8,6 +8,7 @@
     };
 
     const { todo }: TodoListItemProps = $props();
+    const isCompleted = $derived(todo.isCompleted);
 
     function onremove() {
         removeTodo(todo.id);
@@ -22,7 +23,7 @@
     }
 </script>
 
-<div class="item" class:completed={todo.isCompleted}>
+<div class="item" class:completed={isCompleted}>
     <dl>
         {#if todo.name}
             <div class="field">
@@ -40,16 +41,16 @@
     <div class="footer">
         <div class="actions">
             <button onclick={onremove}> Удалить </button>
-            <button onclick={onedit} disabled={todo.isCompleted}>
+            <button onclick={onedit} disabled={isCompleted}>
                 Редактировать
             </button>
         </div>
         <input
             type="checkbox"
             class="checkbox"
-            value={todo.isCompleted}
+            checked={isCompleted}
             onchange={oncomplete}
-            disabled={todo.isCompleted}
+            disabled={isCompleted}
         />
     </div>
 </div>
