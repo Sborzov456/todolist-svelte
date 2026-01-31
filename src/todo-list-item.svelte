@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Todo } from "./types";
     import { completeTodo, removeTodo } from "./todo-model.svelte";
+    import { editTodoDialogModel } from "./edit-todo-dialog/edit-todo-dialog-model.svelte";
 
     type TodoListItemProps = {
         todo: Todo;
@@ -14,6 +15,10 @@
 
     function oncomplete() {
         completeTodo(todo.id);
+    }
+
+    function onedit() {
+        editTodoDialogModel.open(todo);
     }
 </script>
 
@@ -33,7 +38,12 @@
         {/if}
     </dl>
     <div class="footer">
-        <button onclick={onremove}> Удалить </button>
+        <div class="actions">
+            <button onclick={onremove}> Удалить </button>
+            <button onclick={onedit} disabled={todo.isCompleted}>
+                Редактировать
+            </button>
+        </div>
         <input
             type="checkbox"
             class="checkbox"
@@ -86,5 +96,10 @@
 
     dd {
         margin: 0;
+    }
+
+    .actions {
+        display: flex;
+        gap: 5px;
     }
 </style>
