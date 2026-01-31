@@ -3,6 +3,7 @@
         HTMLDialogAttributes,
         MouseEventHandler,
     } from "svelte/elements";
+    import { isOutsideClick } from "./is-outside-click";
 
     export type DialogProps = HTMLDialogAttributes;
 
@@ -15,15 +16,7 @@
             return;
         }
 
-        const { left, right, top, bottom } = dialog.getBoundingClientRect();
-        const { clientX, clientY } = event;
-
-        if (
-            clientX < left ||
-            clientX > right ||
-            clientY < top ||
-            clientY > bottom
-        ) {
+        if (isOutsideClick(event, dialog)) {
             open = false;
         }
 
