@@ -11,11 +11,11 @@
     const isCompleted = $derived(todo.isCompleted);
 
     function onremove() {
-        removeTodo(todo.id);
+        removeTodo(todo._id);
     }
 
     function oncomplete() {
-        completeTodo(todo.id);
+        completeTodo(todo._id);
     }
 
     function onedit() {

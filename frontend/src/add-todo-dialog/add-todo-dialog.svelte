@@ -5,7 +5,7 @@
     import { addTodoDialogModel } from "./add-todo-dialog-model.svelte";
 
     type AddTodoDialogProps = {
-        onsubmit: (paylod: Omit<Todo, "id">) => void;
+        onsubmit: (paylod: Omit<Todo, "_id">) => void;
     };
 
     const props: AddTodoDialogProps = $props();
