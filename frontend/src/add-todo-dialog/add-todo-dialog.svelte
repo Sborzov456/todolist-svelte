@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Dialog } from "../shared/dialog";
     import { TextInput, TextArea } from "../shared/fields";
-    import type { Todo } from "../types";
+    import type { Todo } from "@shared/api-types";
     import { addTodoDialogModel } from "./add-todo-dialog-model.svelte";
 
     type AddTodoDialogProps = {

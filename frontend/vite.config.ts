@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,7 +9,12 @@ export default defineConfig({
         host: "0.0.0.0",
         port: 5173,
         watch: {
-            usePolling: true, 
+            usePolling: true,
+        },
+    },
+    resolve: {
+        alias: {
+            "@shared": path.resolve(__dirname, "../shared"),
         },
     },
 });

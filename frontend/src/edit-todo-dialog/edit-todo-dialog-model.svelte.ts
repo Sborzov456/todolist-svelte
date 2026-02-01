@@ -1,4 +1,4 @@
-import type { Todo } from "../types";
+import type { Todo } from "@shared/api-types";
 
 let isOpen = $state(false);
 let payload = $state<Todo>();

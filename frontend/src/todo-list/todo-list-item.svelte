@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Todo } from "../types";
+    import type { Todo } from "@shared/api-types";
     import { completeTodo, removeTodo } from "../todo-model.svelte";
     import { editTodoDialogModel } from "../edit-todo-dialog";
 
