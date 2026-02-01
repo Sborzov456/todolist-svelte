@@ -1,1 +1,1 @@
-export type {Todo} from './todo'
+export type {Todo, CreateTodoRequst, CreateTodoResponse, ListTodosRequest, ListTodosResponse, PartialTodo, UpdateTodoRequest, UpdateTodoResponse, DeleteTodoRequest, DeleteTodoResponse} from './todo'

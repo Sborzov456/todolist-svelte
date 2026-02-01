@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import type { Todo } from '@shared/api-types/index.js';
+import mongoose from "mongoose";
+import type { Todo } from "@shared/api-types/index.js";
 
 const todoSchema = new mongoose.Schema<Todo>({
     name: {
@@ -17,4 +17,4 @@ const todoSchema = new mongoose.Schema<Todo>({
     },
 });
 
-export const TodoModel = mongoose.model<Todo>('Todo', todoSchema);
+export const TodoModel = mongoose.model<Todo>("Todo", todoSchema);
