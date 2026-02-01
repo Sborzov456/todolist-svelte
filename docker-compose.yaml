@@ -11,14 +11,31 @@ services:
         # Нужно для запуска из Podman. Event-base слежение за изменением файлов не работает в Podman
         environment:
             - WATCHPACK_POLLING=true
+
+    mongodb:
+        image: mongo:7.0
+        container_name: mongodb
+        restart: always
+        ports:
+            - "27017:27017"
+        env_file:
+            - ./backend/.env
+        volumes:
+            - ./db/data:/data/db
+            - ./db/config:/data/configdb
+
     backend:
         build:
             context: ./backend
             dockerfile: Dockerfile
+        env_file:
+            - ./backend/.env
         volumes:
-          - "./backend/src:/backend/src"
+            - "./backend/src:/backend/src"
         ports:
             - "3001:3001"
-        # Нужно для запуска из Podman. Event-base слежение за изменением файлов не работает в Podman
         environment:
             - CHOKIDAR_USEPOLLING=true
+        depends_on:
+            - mongodb
+        restart: "always"
