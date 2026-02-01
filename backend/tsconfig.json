@@ -11,9 +11,13 @@
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "outDir": "dist",
+    "baseUrl": ".",
     "paths": {
       "~/*": [
         "./src/*"
+      ],
+      "@shared/*": [
+        "../shared/*"
       ]
     },
     "resolveJsonModule": true,
