@@ -7,4 +7,6 @@ export type {
     PartialTodo,
     UpdateTodoRequest,
     UpdateTodoResponse,
+    DeleteTodoRequest,
+    DeleteTodoResponse,
 } from "./todo";

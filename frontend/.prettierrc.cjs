@@ -1,6 +1,6 @@
-const config = require('../.prettierrc.cjs');
+const config = require("../.prettierrc.cjs");
 
 module.exports = {
     ...config,
-    plugins: ['prettier-plugin-svelte'],
+    plugins: ["prettier-plugin-svelte"],
 };

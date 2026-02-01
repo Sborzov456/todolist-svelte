@@ -31,9 +31,7 @@ export type UpdateTodoResponse = {
     todo: Todo
 }
 
-export type DeleteTodoRequest = {
-    _id: string
-}
+export type DeleteTodoRequest = {}
 
 export type DeleteTodoResponse = {
     todo: Todo

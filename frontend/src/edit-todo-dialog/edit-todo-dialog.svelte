@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Dialog } from "../shared/dialog";
-    import { TextInput, TextArea } from "../shared/fields";
+    import { Dialog } from "../shared/ui/dialog";
+    import { TextInput, TextArea } from "../shared/ui/fields";
     import { editTodoDialogModel } from "./edit-todo-dialog-model.svelte";
     import type { Todo } from "@shared/api-types";
 

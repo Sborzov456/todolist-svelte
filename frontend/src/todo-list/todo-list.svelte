@@ -3,18 +3,22 @@
     import { getTodos } from "../todo-model.svelte";
     import TodoListItem from "./todo-list-item.svelte";
 
-    const todos = $derived(getTodos());
+    const todos = $state(getTodos());
 
     function onaddtodo() {
         addTodoDialogModel.open();
     }
 </script>
 
-<ul class="list">
-    {#each todos as todo}
-        <li><TodoListItem {todo} /></li>
-    {/each}
-</ul>
+{#await todos}
+    Загрузка...
+{:then todos}
+    <ul class="list">
+        {#each todos as todo}
+            <li><TodoListItem {todo} /></li>
+        {/each}
+    </ul>
+{/await}
 <button onclick={onaddtodo}>Добавить задачу</button>
 
 <style>

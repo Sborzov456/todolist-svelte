@@ -1,34 +1,23 @@
 import type { Todo } from "@shared/api-types";
+import { todosApi } from "./shared/api";
 
-let todos = $state<Todo[]>([]);
-
-export function getTodos() {
-    return todos;
+export async function getTodos() {
+    const response = await todosApi.listTodos();
+    return response.todos;
 }
 
-export function addTodo(newTodo: Omit<Todo, "_id" | "isCompleted">) {
-    todos.push({ ...newTodo, _id: crypto.randomUUID(), isCompleted: false });
+export function addTodo(todo: Omit<Todo, "_id" | "isCompleted">) {
+    todosApi.createTodo({ todo: { ...todo, isCompleted: false } });
 }
 
 export function removeTodo(id: string) {
-    todos = todos.filter((todo) => todo._id !== id);
+    todosApi.deleteTodo(id);
 }
 
-// TODO: Тут, вероятно, лучше впишется функция patchTodo с частичным изменением. Тогда completeTodo будет частным случаем этой фукнции
-export function editTodo(payload: Todo) {
-    todos = todos.map((todo) => {
-        if (todo._id === payload._id) {
-            return payload;
-        }
-        return todo;
-    });
+export function editTodo(todo: Todo) {
+    todosApi.updateTodo({ todo });
 }
 
 export function completeTodo(id: string) {
-    todos = todos.map((todo) => {
-        if (id === todo._id) {
-            return { ...todo, isCompleted: true };
-        }
-        return todo;
-    });
+    todosApi.updateTodo({ todo: { _id: id, isCompleted: true } });
 }
