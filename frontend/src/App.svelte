@@ -2,9 +2,9 @@
     import { AddTodoDialog } from "./add-todo-dialog";
     import { EditTodoDialog } from "./edit-todo-dialog";
     import { TodoList } from "./todo-list";
-    import { addTodo, editTodo } from "./todo.model.svelte";
+    import { todoListModel } from "./todo-list";
 </script>
 
 <TodoList />
-<AddTodoDialog onSubmit={addTodo} />
-<EditTodoDialog onSubmit={editTodo} />
+<AddTodoDialog onSubmit={todoListModel.addTodo} />
+<EditTodoDialog onSubmit={todoListModel.editTodo} />

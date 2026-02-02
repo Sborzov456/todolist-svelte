@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Todo } from "@shared/api-types";
-    import { completeTodo, removeTodo } from "../todo.model.svelte";
+    import { todoListModel } from "./model";
     import { editTodoDialogModel } from "../edit-todo-dialog";
 
     type TodoListItemProps = {
@@ -8,6 +8,7 @@
     };
 
     const { todo }: TodoListItemProps = $props();
+    const { removeTodo, completeTodo } = todoListModel;
     const isCompleted = $derived(todo.isCompleted);
 
     function handleRemove() {
