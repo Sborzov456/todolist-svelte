@@ -2,7 +2,7 @@
     import { Dialog } from "../shared/ui/dialog";
     import { TextInput, TextArea } from "../shared/ui/fields";
     import type { Todo } from "@shared/api-types";
-    import { addTodoDialogModel } from "./add-todo-dialog-model.svelte";
+    import { addTodoDialogModel } from "./add-todo-dialog.model.svelte";
 
     type AddTodoDialogProps = {
         onSubmit: (paylod: Omit<Todo, "_id">) => void;

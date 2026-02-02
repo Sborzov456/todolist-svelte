@@ -1,6 +1,6 @@
 <script>
     import { addTodoDialogModel } from "../add-todo-dialog";
-    import { todosList, getTodos } from "../todo-model.svelte";
+    import { todosList, getTodos } from "../todo.model.svelte";
     import TodoListItem from "./todo-list-item.svelte";
 
     getTodos();
