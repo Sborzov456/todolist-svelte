@@ -5,21 +5,21 @@
     import type { Todo } from "@shared/api-types";
 
     type EditTodoDialogProps = {
-        onsubmit: (paylod: Todo) => void;
+        onSubmit: (paylod: Todo) => void;
     };
 
-    let props: EditTodoDialogProps = $props();
+    let { onSubmit }: EditTodoDialogProps = $props();
     const paylod = $derived(editTodoDialogModel.getPayload());
     let open = $derived(editTodoDialogModel.getIsOpen());
 
-    function onsubmit(event: SubmitEvent) {
+    function handleSubmit(event: SubmitEvent) {
         if (!paylod) {
             return;
         }
 
         event.preventDefault();
 
-        props.onsubmit({
+        onSubmit({
             ...paylod,
             name: editTodoDialogModel.getName(),
             description: editTodoDialogModel.getDescription(),
@@ -29,13 +29,13 @@
         editTodoDialogModel.resetForm();
     }
 
-    function onclose() {
+    function handleClose() {
         editTodoDialogModel.resetForm();
     }
 </script>
 
-<Dialog bind:open {onclose}>
-    <form {onsubmit} class="form">
+<Dialog bind:open onClose={handleClose}>
+    <form onsubmit={handleSubmit} class="form">
         <TextInput
             id="name"
             label="Имя"

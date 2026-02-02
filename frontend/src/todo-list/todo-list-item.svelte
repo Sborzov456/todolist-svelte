@@ -10,15 +10,15 @@
     const { todo }: TodoListItemProps = $props();
     const isCompleted = $derived(todo.isCompleted);
 
-    function onremove() {
+    function handleRemove() {
         removeTodo(todo._id);
     }
 
-    function oncomplete() {
+    function handleComplete() {
         completeTodo(todo._id);
     }
 
-    function onedit() {
+    function handleEdit() {
         editTodoDialogModel.open(todo);
     }
 </script>
@@ -40,8 +40,8 @@
     </dl>
     <div class="footer">
         <div class="actions">
-            <button onclick={onremove}> Удалить </button>
-            <button onclick={onedit} disabled={isCompleted}>
+            <button onclick={handleRemove}> Удалить </button>
+            <button onclick={handleEdit} disabled={isCompleted}>
                 Редактировать
             </button>
         </div>
@@ -49,7 +49,7 @@
             type="checkbox"
             class="checkbox"
             checked={isCompleted}
-            onchange={oncomplete}
+            onchange={handleComplete}
             disabled={isCompleted}
         />
     </div>

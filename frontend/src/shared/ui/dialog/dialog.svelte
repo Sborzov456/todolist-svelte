@@ -5,13 +5,20 @@
     } from "svelte/elements";
     import { isOutsideClick } from "./is-outside-click";
 
-    export type DialogProps = HTMLDialogAttributes;
+    export type DialogProps = HTMLDialogAttributes & {
+        onClose?: () => void;
+    };
 
-    let { children, open = $bindable(false), ...props }: DialogProps = $props();
+    let {
+        children,
+        open = $bindable(false),
+        onClose,
+        ...props
+    }: DialogProps = $props();
 
     let dialog = $state<HTMLDialogElement>();
 
-    const onclick: MouseEventHandler<HTMLDialogElement> = (event) => {
+    const handleClick: MouseEventHandler<HTMLDialogElement> = (event) => {
         if (!dialog) {
             return;
         }
@@ -28,10 +35,11 @@
             dialog?.showModal();
         } else {
             dialog?.close();
+            onClose?.();
         }
     });
 </script>
 
-<dialog {...props} bind:this={dialog} {onclick}>
+<dialog {...props} bind:this={dialog} onclick={handleClick}>
     {@render children?.()}
 </dialog>

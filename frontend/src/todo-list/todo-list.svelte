@@ -5,7 +5,7 @@
 
     getTodos();
 
-    function onaddtodo() {
+    function handleAddTodo() {
         addTodoDialogModel.open();
     }
 </script>
@@ -20,7 +20,7 @@
     </ul>
 {/if}
 
-<button onclick={onaddtodo}>Добавить задачу</button>
+<button onclick={handleAddTodo}>Добавить задачу</button>
 
 <style>
     .list {

@@ -5,15 +5,15 @@
     import { addTodoDialogModel } from "./add-todo-dialog-model.svelte";
 
     type AddTodoDialogProps = {
-        onsubmit: (paylod: Omit<Todo, "_id">) => void;
+        onSubmit: (paylod: Omit<Todo, "_id">) => void;
     };
 
-    const props: AddTodoDialogProps = $props();
+    const { onSubmit }: AddTodoDialogProps = $props();
 
-    function onsubmit(event: SubmitEvent) {
+    function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
 
-        props.onsubmit({
+        onSubmit({
             name: addTodoDialogModel.getName(),
             description: addTodoDialogModel.getDescription(),
             isCompleted: false,
@@ -23,16 +23,16 @@
         addTodoDialogModel.resetForm();
     }
 
-    function onclose() {
+    function handleClose() {
         addTodoDialogModel.resetForm();
     }
 </script>
 
 <Dialog
     bind:open={addTodoDialogModel.getIsOpen, addTodoDialogModel.setIsOpen}
-    {onclose}
+    onClose={handleClose}
 >
-    <form {onsubmit} class="form">
+    <form onsubmit={handleSubmit} class="form">
         <TextInput
             id="name"
             label="Имя"

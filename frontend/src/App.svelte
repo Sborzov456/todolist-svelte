@@ -6,5 +6,5 @@
 </script>
 
 <TodoList />
-<AddTodoDialog onsubmit={addTodo} />
-<EditTodoDialog onsubmit={editTodo} />
+<AddTodoDialog onSubmit={addTodo} />
+<EditTodoDialog onSubmit={editTodo} />
