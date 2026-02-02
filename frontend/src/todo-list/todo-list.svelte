@@ -1,24 +1,25 @@
 <script>
     import { addTodoDialogModel } from "../add-todo-dialog";
-    import { getTodos } from "../todo-model.svelte";
+    import { todosList, getTodos } from "../todo-model.svelte";
     import TodoListItem from "./todo-list-item.svelte";
 
-    const todos = $state(getTodos());
+    getTodos();
 
     function onaddtodo() {
         addTodoDialogModel.open();
     }
 </script>
 
-{#await todos}
+{#if todosList.pending}
     Загрузка...
-{:then todos}
+{:else}
     <ul class="list">
-        {#each todos as todo}
+        {#each todosList.items as todo}
             <li><TodoListItem {todo} /></li>
         {/each}
     </ul>
-{/await}
+{/if}
+
 <button onclick={onaddtodo}>Добавить задачу</button>
 
 <style>
