@@ -9,6 +9,7 @@ export function createTodoListModel({ api }: { api: typeof todosApi }) {
 
     async function getTodos() {
         todosList.pending = true;
+
         try {
             const response = await api.listTodos();
             todosList.items = response.todos;
@@ -26,22 +27,21 @@ export function createTodoListModel({ api }: { api: typeof todosApi }) {
     }
 
     async function removeTodo(id: string) {
-        await api.deleteTodo(id);
         todosList.items = todosList.items.filter((todo) => todo._id !== id);
+        await api.deleteTodo(id);
     }
 
     async function editTodo(
         todo: Pick<Todo, "_id"> & Partial<Omit<Todo, "_id">>,
     ) {
-        const response = await api.updateTodo({ todo });
-        const updatedTodo = response.todo;
-
-        todosList.items = todosList.items.map((todo) => {
-            if (todo._id === updatedTodo._id) {
-                return updatedTodo;
+        todosList.items = todosList.items.map((item) => {
+            if (item._id === todo._id) {
+                return { ...item, ...todo };
             }
-            return todo;
+            return item;
         });
+
+        return await api.updateTodo({ todo });
     }
 
     function completeTodo(id: string) {

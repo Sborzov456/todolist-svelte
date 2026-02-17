@@ -14,12 +14,7 @@ type TodosApi = typeof todosApi;
 describe("createTodosModel", () => {
     it("устанавливает pending в true во время выполнения getTodos и в false после завершения", async () => {
         const mockApi: TodosApi = {
-            listTodos: vi.fn(
-                () =>
-                    new Promise<ListTodosResponse>((resolve) =>
-                        resolve({ todos: [] }),
-                    ),
-            ),
+            listTodos: vi.fn(async () => ({ todos: [] })),
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(),
@@ -56,12 +51,7 @@ describe("createTodosModel", () => {
         };
 
         const mockApi: TodosApi = {
-            listTodos: vi.fn(
-                () =>
-                    new Promise<ListTodosResponse>((resolve) =>
-                        resolve(mockResponse),
-                    ),
-            ),
+            listTodos: vi.fn(async () => mockResponse),
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(),
@@ -134,12 +124,7 @@ describe("createTodosModel", () => {
             listTodos: vi.fn(),
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
-            deleteTodo: vi.fn(
-                () =>
-                    new Promise<DeleteTodoResponse>((resolve) =>
-                        resolve(mockResponse),
-                    ),
-            ),
+            deleteTodo: vi.fn(async () => mockResponse),
         };
 
         const model = createTodoListModel({ api: mockApi });
@@ -181,12 +166,7 @@ describe("createTodosModel", () => {
         const mockApi: TodosApi = {
             listTodos: vi.fn(),
             createTodo: vi.fn(),
-            updateTodo: vi.fn(
-                () =>
-                    new Promise<UpdateTodoResponse>((resolve) =>
-                        resolve(mockResponse),
-                    ),
-            ),
+            updateTodo: vi.fn(async () => mockResponse),
             deleteTodo: vi.fn(),
         };
 
