@@ -4,9 +4,11 @@ export type {
     CreateTodoResponse,
     ListTodosRequest,
     ListTodosResponse,
-    PartialTodo,
     UpdateTodoRequest,
     UpdateTodoResponse,
     DeleteTodoRequest,
     DeleteTodoResponse,
+    BatchUpdateTodoRequest,
+    BatchUpdateTodoResponse,
+    PartialTodo,
 } from "./todo";

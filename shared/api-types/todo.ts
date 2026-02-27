@@ -3,36 +3,43 @@ export type Todo = {
     name: string;
     description?: string;
     isCompleted: boolean;
+    index?: number;
 };
 
-export type ListTodosRequest = {}
+export type PartialTodo = Pick<Todo, "_id"> & Partial<Omit<Todo, "_id">>;
+
+export type ListTodosRequest = {};
 
 export type ListTodosResponse = {
-    todos: Todo[]
-}
+    todos: Todo[];
+};
 
 export type CreateTodoRequst = {
-    todo: Omit<Todo, '_id'>
-}
+    todo: Omit<Todo, "_id">;
+};
 
 export type CreateTodoResponse = {
-    todo: Todo
-}
-
-export type PartialTodo = Partial<Omit<Todo, '_id'>> & {
-    _id: string;
-}
+    todo: Todo;
+};
 
 export type UpdateTodoRequest = {
-    todo: Pick<Todo, '_id'> & Partial<Omit<Todo, '_id'>>
-}
+    todo: PartialTodo;
+};
 
 export type UpdateTodoResponse = {
-    todo: Todo
-}
+    todo: Todo;
+};
 
-export type DeleteTodoRequest = {}
+export type DeleteTodoRequest = {};
 
 export type DeleteTodoResponse = {
-    todo: Todo
-}
+    todo: Todo;
+};
+
+export type BatchUpdateTodoRequest = {
+    todos: PartialTodo[];
+};
+
+export type BatchUpdateTodoResponse = {
+    todos: Todo[];
+};

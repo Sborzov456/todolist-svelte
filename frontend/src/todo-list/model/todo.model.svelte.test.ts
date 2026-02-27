@@ -18,6 +18,7 @@ describe("createTodosModel", () => {
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(),
+            batchUpdateTodos: vi.fn(),
         };
 
         const model = createTodoListModel({ api: mockApi });
@@ -31,7 +32,7 @@ describe("createTodosModel", () => {
         expect(model.todosList.pending).toBe(false);
     });
 
-    it("обновляет items результатом getTodos", async () => {
+    it("обновляет items результатом getTodos и проставляет index по позиции", async () => {
         const mockTodos: Todo[] = [
             {
                 _id: "1",
@@ -55,13 +56,16 @@ describe("createTodosModel", () => {
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(),
+            batchUpdateTodos: vi.fn(),
         };
 
         const model = createTodoListModel({ api: mockApi });
 
         await model.getTodos();
 
-        expect(model.todosList.items).toEqual(mockTodos);
+        expect(model.todosList.items).toHaveLength(2);
+        expect(model.todosList.items[0]).toEqual({ ...mockTodos[0], index: 0 });
+        expect(model.todosList.items[1]).toEqual({ ...mockTodos[1], index: 1 });
     });
 
     it("добавляет todo из результата addTodo в конец items", async () => {
@@ -90,6 +94,7 @@ describe("createTodosModel", () => {
             ),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(),
+            batchUpdateTodos: vi.fn(),
         };
 
         const model = createTodoListModel({ api: mockApi });
@@ -102,17 +107,19 @@ describe("createTodosModel", () => {
         );
     });
 
-    it("удаляет todo из items после вызова removeTodo", async () => {
+    it("удаляет todo из items после вызова removeTodo и синхронизирует индексы", async () => {
         const existingTodos: Todo[] = [
             {
                 _id: "1",
                 name: "Todo 1",
                 isCompleted: false,
+                index: 0,
             },
             {
                 _id: "2",
                 name: "Todo 2",
                 isCompleted: false,
+                index: 1,
             },
         ];
 
@@ -120,11 +127,14 @@ describe("createTodosModel", () => {
             todo: existingTodos[0],
         };
 
+        const batchUpdateTodosMock = vi.fn(async () => ({}));
+
         const mockApi: TodosApi = {
             listTodos: vi.fn(),
             createTodo: vi.fn(),
             updateTodo: vi.fn(),
             deleteTodo: vi.fn(async () => mockResponse),
+            batchUpdateTodos: batchUpdateTodosMock,
         };
 
         const model = createTodoListModel({ api: mockApi });
@@ -135,6 +145,9 @@ describe("createTodosModel", () => {
         expect(model.todosList.items).not.toContainEqual(existingTodos[0]);
         expect(model.todosList.items).toHaveLength(1);
         expect(model.todosList.items[0]._id).toBe("2");
+        expect(batchUpdateTodosMock).toHaveBeenCalledWith({
+            todos: [{ _id: "2", index: 0 }],
+        });
     });
 
     it("обновляет todo в items после вызова editTodo", async () => {
@@ -168,6 +181,7 @@ describe("createTodosModel", () => {
             createTodo: vi.fn(),
             updateTodo: vi.fn(async () => mockResponse),
             deleteTodo: vi.fn(),
+            batchUpdateTodos: vi.fn(),
         };
 
         const model = createTodoListModel({ api: mockApi });
@@ -181,5 +195,51 @@ describe("createTodosModel", () => {
 
         expect(model.todosList.items[0]).toEqual(updatedTodo);
         expect(model.todosList.items[1]).toEqual(existingTodos[1]);
+    });
+
+    it("обновляет порядок items после reorderTodos и синхронизирует индексы через batchUpdateTodos", () => {
+        const existingTodos: Todo[] = [
+            { _id: "1", name: "Todo 1", isCompleted: false, index: 0 },
+            { _id: "2", name: "Todo 2", isCompleted: false, index: 1 },
+            { _id: "3", name: "Todo 3", isCompleted: false, index: 2 },
+        ];
+
+        const batchUpdateTodosMock = vi.fn(async () => ({}));
+
+        const mockApi: TodosApi = {
+            listTodos: vi.fn(),
+            createTodo: vi.fn(),
+            updateTodo: vi.fn(),
+            deleteTodo: vi.fn(),
+            batchUpdateTodos: batchUpdateTodosMock,
+        };
+
+        const model = createTodoListModel({ api: mockApi });
+        model.todosList.items = [...existingTodos];
+
+        const reordered = [
+            existingTodos[2],
+            existingTodos[0],
+            existingTodos[1],
+        ];
+
+        model.reorderTodos(reordered);
+
+        expect(model.todosList.items).toHaveLength(3);
+        expect(model.todosList.items.map((t) => t._id)).toEqual([
+            "3",
+            "1",
+            "2",
+        ]);
+        expect(model.todosList.items[0].index).toBe(0);
+        expect(model.todosList.items[1].index).toBe(1);
+        expect(model.todosList.items[2].index).toBe(2);
+        expect(batchUpdateTodosMock).toHaveBeenCalledWith({
+            todos: [
+                { _id: "3", index: 0 },
+                { _id: "1", index: 1 },
+                { _id: "2", index: 2 },
+            ],
+        });
     });
 });

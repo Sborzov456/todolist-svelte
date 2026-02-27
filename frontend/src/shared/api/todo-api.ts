@@ -6,6 +6,7 @@ import type {
     UpdateTodoRequest,
     UpdateTodoResponse,
     DeleteTodoResponse,
+    BatchUpdateTodoRequest,
 } from "@shared/api-types";
 import { createApiClient } from "../lib/api-client";
 
@@ -27,9 +28,14 @@ function deleteTodo(id: Todo["_id"]): Promise<DeleteTodoResponse> {
     return api.delete(`${id}`);
 }
 
+function batchUpdateTodos(data: BatchUpdateTodoRequest) {
+    return api.patch("batch-update", data);
+}
+
 export const todosApi = {
     listTodos,
     createTodo,
     updateTodo,
     deleteTodo,
+    batchUpdateTodos
 };
